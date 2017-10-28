@@ -24,7 +24,9 @@ trait AutogenerateUuidTrait
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->uuid = Uuid::uuid4();
+            if ($model->isClean('uuid')) {
+                $model->uuid = Uuid::uuid4()->toString();
+            }
         });
     }
 }
